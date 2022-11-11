@@ -43,6 +43,16 @@ def RegistrationRequest():
     password = request_data['password']
     confirm_password = request_data['confirmPassword']
     
+    if(password != confirm_password):
+        return jsonify({'confirmation': "WRONG_PASSWORD"})
+    
+    if(mongo.verify_user_exists(user_id) is True):
+        return jsonify({'confirmation':"User_EXISTS"})
+    
+    if( (username == "") or (user_id == "") or (password == "") or (confirm_password == "") is True):
+        return jsonify({'confirmation':"BLANK"});
+    
+    user = User(username,user_id,password)
     return jsonify({'confirmation':"RECIEVED"})
     
     

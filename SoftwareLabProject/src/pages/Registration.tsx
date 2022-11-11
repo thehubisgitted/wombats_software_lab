@@ -102,7 +102,7 @@ function Registration(){
                 <Grid item>
                   <Button variant = "contained" color = "primary" onClick={()=> navigate('/')}> Cancel</Button>
                 </Grid>
-                <Grid item> <Button variant = "contained" color = "primary" onClick={()=> handleRegistration()}> Register</Button></Grid>
+                <Grid item> <Button variant = "contained" color = "primary" onClick={handleRegistration}> Register</Button></Grid>
               </Grid>
                 </div>
                 </div>
