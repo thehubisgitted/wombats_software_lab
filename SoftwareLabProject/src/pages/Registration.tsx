@@ -6,6 +6,31 @@ import {AccountCircle, LockRounded} from '@material-ui/icons'
 
 function Registration(){
     const navigate = useNavigate();
+    const[username,setUsername] = React.useState("");
+    const[password,setPassword] = React.useState("");
+    const[userID, setuserID] = React.useState("");
+    const[confirmPassword, setConfirmPassword] = React.useState("");
+
+    function handleRegistration(){
+
+    }
+
+    function handleChange_password(event:any){
+
+    }
+
+    function handleChange_username(event:any){
+
+    }
+
+    function handleChange_confirm_password(event:any){
+
+    }
+
+    function handleChange_userID(event:any){
+        
+    }
+
 
     return(
         <div>
@@ -52,7 +77,7 @@ function Registration(){
                     <div style = {{paddingTop: 20}}>
                 <Grid container justifyContent='center' spacing = {2}>
                 <Grid item>
-                  <Button variant = "contained" color = "primary"> Cancel</Button>
+                  <Button variant = "contained" color = "primary" onClick={()=> navigate('/')}> Cancel</Button>
                 </Grid>
                 <Grid item> <Button variant = "contained" color = "primary"> Register</Button></Grid>
               </Grid>
