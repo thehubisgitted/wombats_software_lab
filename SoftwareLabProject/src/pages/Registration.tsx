@@ -12,23 +12,42 @@ function Registration(){
     const[confirmPassword, setConfirmPassword] = React.useState("");
 
     function handleRegistration(){
+        const data = {'username':username, 'userID':userID, 'password':password, 'confirmPassword':confirmPassword};
+        console.log(data);
 
+        fetch('/registration', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+          .then((response) => response.json())
+          .then((data) =>{
+            console.log(data['confirmation']);
+          }).catch((error) => {
+                if(error.response){
+                    console.log(error);
+                    console.log(error.response.statuts);
+                    console.log(error.response.headers);
+                }
+          })
     }
 
     function handleChange_password(event:any){
-
+        setPassword(event.target.value);
     }
 
     function handleChange_username(event:any){
-
+        setUsername(event.target.value);
     }
 
     function handleChange_confirm_password(event:any){
-
+        setConfirmPassword(event.target.value);
     }
 
     function handleChange_userID(event:any){
-        
+        setuserID(event.target.value);
     }
 
 
@@ -42,6 +61,7 @@ function Registration(){
                     </Grid>
                     <div className="text">
                         <TextField
+                        onChange={handleChange_username}
                         label = "Username" 
                         margin = "normal" 
                         fullWidth
@@ -50,6 +70,7 @@ function Registration(){
                     </div>
                     <div className="text">
                         <TextField
+                        onChange={handleChange_userID}
                         label = "User ID" 
                         margin = "normal" 
                         fullWidth
@@ -58,6 +79,7 @@ function Registration(){
                     </div>
                     <div className="text">
                         <TextField 
+                        onChange = {handleChange_password} 
                         label = "Password" 
                         margin = "normal"
                         type = "password"
@@ -67,6 +89,7 @@ function Registration(){
                     </div>
                     <div className="text">
                         <TextField 
+                        onChange = {handleChange_confirm_password}
                         label = "Confirm Password" 
                         margin = "normal" 
                         type = "password"
@@ -79,7 +102,7 @@ function Registration(){
                 <Grid item>
                   <Button variant = "contained" color = "primary" onClick={()=> navigate('/')}> Cancel</Button>
                 </Grid>
-                <Grid item> <Button variant = "contained" color = "primary"> Register</Button></Grid>
+                <Grid item> <Button variant = "contained" color = "primary" onClick={()=> handleRegistration()}> Register</Button></Grid>
               </Grid>
                 </div>
                 </div>

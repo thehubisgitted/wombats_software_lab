@@ -19,8 +19,10 @@ def index():
 def LoginRequest():
     request_data = request.get_json()
     print(request_data, file=sys.stderr)
+    
     user_id = request_data['userID']
     password = request_data['password']
+    
     if mongo.verify_user_exists(user_id) is False:
         return jsonify({'confirmation':'User Doesn\'t Exist'})
     
@@ -30,6 +32,20 @@ def LoginRequest():
     #     return jsonify({'confirmation': "1234 recieved successfully"})
     
     return jsonify({'confirmation':"Data Recieved!"})
+
+@app.route('/registration', methods=['POST'])
+def RegistrationRequest():
+    request_data = request.get_json()
+    print(request_data, file=sys.stderr)
+    
+    username = request_data['username']
+    user_id = request_data['userID']
+    password = request_data['password']
+    confirm_password = request_data['confirmPassword']
+    
+    return jsonify({'confirmation':"RECIEVED"})
+    
+    
 
 @app.route('/user/<username>')
 def queryUser(username):
