@@ -9,10 +9,7 @@ function Registration(){
 
     return(
         <div>
-            <div className="padding">ALREADY HAVE AN ACCOUNT?</div>
-                <div className="cancel">
-                    <Button color = "primary" variant = "contained" onClick={()=> {navigate('/')}}> Return to login </Button>
-                </div> 
+            
             <div className="form">
                 <div className="form-body">
                     <Grid container justifyContent = "center">
@@ -52,11 +49,14 @@ function Registration(){
                         InputProps={{startAdornment:( <InputAdornment position = "start"><LockRounded/></InputAdornment>),
                         }}></TextField>
                     </div>
-                    <div className="text">
-                        <Button style = {{minWidth: 250}} color = "primary" variant = "contained">
-                            Register
-                        </Button>
-                    </div>
+                    <div style = {{paddingTop: 20}}>
+                <Grid container justifyContent='center' spacing = {2}>
+                <Grid item>
+                  <Button variant = "contained" color = "primary"> Cancel</Button>
+                </Grid>
+                <Grid item> <Button variant = "contained" color = "primary"> Register</Button></Grid>
+              </Grid>
+                </div>
                 </div>
             </div>   
         </div> 

@@ -45,7 +45,7 @@ function Login() {
         else{
           seterror(true);
           setStatus("Login Successful! loading...")
-          navigate('/project')
+          navigate('/projects')
         }
       }).catch((error) => {
         if(error.response){
