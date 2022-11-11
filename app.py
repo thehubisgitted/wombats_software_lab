@@ -43,17 +43,21 @@ def RegistrationRequest():
     password = request_data['password']
     confirm_password = request_data['confirmPassword']
     
+    if( (username == "") or (user_id == "") or (password == "") or (confirm_password == "") is True):
+        return jsonify({'confirmation':"BLANK"});
+    
     if(password != confirm_password):
         return jsonify({'confirmation': "WRONG_PASSWORD"})
     
     if(mongo.verify_user_exists(user_id) is True):
-        return jsonify({'confirmation':"User_EXISTS"})
+        return jsonify({'confirmation':"USER_EXISTS"})
     
-    if( (username == "") or (user_id == "") or (password == "") or (confirm_password == "") is True):
-        return jsonify({'confirmation':"BLANK"});
+    user = User.User(username,user_id,password)
     
-    user = User(username,user_id,password)
-    return jsonify({'confirmation':"RECIEVED"})
+    if mongo.create_user(user) is False:
+        return jsonify({'confirmation': "USER_CREATION_FAILED"})
+        
+    return jsonify({'confirmation':"USER_CREATION_SUCCESS"})
     
     
 

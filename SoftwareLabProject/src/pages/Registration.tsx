@@ -6,10 +6,14 @@ import {AccountCircle, LockRounded} from '@material-ui/icons'
 
 function Registration(){
     const navigate = useNavigate();
+
     const[username,setUsername] = React.useState("");
     const[password,setPassword] = React.useState("");
     const[userID, setuserID] = React.useState("");
     const[confirmPassword, setConfirmPassword] = React.useState("");
+
+    const [error, setError] = React.useState(false);
+    const [status, setStatus] = React.useState("User Created Successfully!");
 
     function handleRegistration(){
         const data = {'username':username, 'userID':userID, 'password':password, 'confirmPassword':confirmPassword};
@@ -25,6 +29,27 @@ function Registration(){
           .then((response) => response.json())
           .then((data) =>{
             console.log(data['confirmation']);
+
+            if(data['confirmation'] === 'WRONG_PASSWORD'){
+                setError(true);
+                setStatus("Passwords Don't Match")
+            }
+            else if(data['confirmation'] === 'USER_EXISTS'){
+                setError(true);
+                setStatus("Account Exists");
+            }
+            else if(data['confirmation'] === 'BLANK'){
+                setError(true);
+                setStatus("Make Sure All Fields Are Filled!");
+            }
+            else if(data['confirmation'] === 'USER_CREATION_FAILED'){
+                setError(true);
+                setStatus("DATABASE_ERROR: User Creation Failed");
+            }
+            else{
+                navigate('/projects');
+            }
+
           }).catch((error) => {
                 if(error.response){
                     console.log(error);
@@ -104,6 +129,9 @@ function Registration(){
                 </Grid>
                 <Grid item> <Button variant = "contained" color = "primary" onClick={handleRegistration}> Register</Button></Grid>
               </Grid>
+              { error === true &&
+                  <div className = 'error' style = {{paddingTop: 15}}>{status}</div> 
+                }
                 </div>
                 </div>
             </div>   
