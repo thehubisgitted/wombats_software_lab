@@ -1,13 +1,19 @@
 import React from 'react';
 import './../App.css'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { Button, Grid, TextField} from '@material-ui/core';
 import { string } from 'prop-types';
 import { BorderAllOutlined, FirstPage } from '@material-ui/icons';
 
 function Projects(){
     const navigate = useNavigate();
-    const username = "PLACEHOLDER"
+    const {state} = useLocation();
+    const {ID, USERNAME} = state;
+    
+    const [hardware_1, setHardware_1] = React.useState();
+    const [hardware_2, setHardware_2] = React.useState();
+
+
     const projects = [
         {
             name: 'Project One',
@@ -25,11 +31,12 @@ function Projects(){
     return(
         <div className='App'>
             <div style = {{display:'inline-flex', float:'left', marginLeft:20}}>
-                <h1>
-                    Welcome {username}
-                </h1>
+                {USERNAME === 'loginUser' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
             </div>
             { projects.map(project => <Projectview key={project.name} project={project} />) }
+            <div style = {{display:'inline-flex', float:'right', margin:20}}>
+                <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
+            </div>
         </div>
     );
 }

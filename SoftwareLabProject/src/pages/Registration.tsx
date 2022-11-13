@@ -47,7 +47,7 @@ function Registration(){
                 setStatus("DATABASE_ERROR: User Creation Failed");
             }
             else{
-                navigate('/projects');
+                navigate('/projects', {state:{ID: userID, USERNAME: username}});
             }
 
           }).catch((error) => {

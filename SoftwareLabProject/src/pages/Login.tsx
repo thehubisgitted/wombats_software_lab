@@ -45,7 +45,7 @@ function Login() {
         else{
           seterror(true);
           setStatus("Login Successful! loading...")
-          navigate('/projects')
+          Projects_REDIRECT();
         }
       }).catch((error) => {
         if(error.response){
@@ -66,7 +66,7 @@ function Login() {
       added temporary redirect so michael can work on projects page
     */
     function Projects_REDIRECT(){
-      navigate('projects')
+      navigate('/projects', {state:{ID: userID, USERNAME: 'loginUser'}});
     }
   
     return (
@@ -117,7 +117,6 @@ function Login() {
                 </div>
                 <div style={{ height: 20, flexDirection: "row"}}/>
                 <Button onClick={()=>Registration_REDIRECT()}>Don't have an account? Sign Up Here</Button>
-                <Button onClick={()=>Projects_REDIRECT()}>Projects Page</Button>
               </div>
           </Grid>
         </Grid>
