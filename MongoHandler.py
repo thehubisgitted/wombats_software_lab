@@ -34,7 +34,7 @@ class DataHandler:
             member_list = project.get_members()
             member_list_to_add_to_document = []
             for member in member_list:
-                member_list_to_add_to_document.append([member.username, member.ID, member.password])
+                member_list_to_add_to_document.append([member.username, member.ID, rsa.encrypt(member.password.encode(), DataHandler.public_key)])
 
             hardware_dictionary = project.get_hardware()
             hw_list = hardware_dictionary.keys()
