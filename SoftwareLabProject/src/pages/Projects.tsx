@@ -10,30 +10,47 @@ function Projects(){
     const {state} = useLocation();
     const {ID, USERNAME} = state;
     
-    const [hardware_1, setHardware_1] = React.useState();
-    const [hardware_2, setHardware_2] = React.useState();
+
+    const projects:any = [];
+
+    React.useEffect(() => {
+        const projectlist = getProjects(ID);
+        
+      }, [ID]);
 
 
-    const projects = [
-        {
-            name: 'Project One',
-            set_one: 100,
-            set_two: 200,
-
-        },
-        {
-            name: 'Project Two',
-            set_one: 150,
-            set_two: 300,
+      function getProjects(ID: any){
+        if(ID === undefined){
+            console.log("NO ID? UNDEFINED");
+            return;
         }
-    ]
-   
+
+        fetch('/getProjects', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({'userID':ID}),
+          })
+          .then((response) => response.json())
+          .then((data)=>{
+            console.log(data);
+
+          })
+          .catch((error)=>{
+            if(error.response){
+                console.log(error);
+                console.log(error.response.statuts);
+                console.log(error.response.headers);
+              }
+          })
+      }
     return(
         <div className='App'>
             <div style = {{display:'inline-flex', float:'left', marginLeft:20}}>
                 {USERNAME === 'loginUser' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
             </div>
-            { projects.map(project => <Projectview key={project.name} project={project} />) }
+            { projects.map((project: { name: any; }) => <Projectview key={project.name} project={project} />) }
             <div style = {{display:'inline-flex', float:'right', margin:20}}>
                 <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
             </div>
@@ -42,6 +59,10 @@ function Projects(){
 }
 
 function Projectview(props: any){
+
+    const [hardware_1, setHardware_1] = React.useState();
+    const [hardware_2, setHardware_2] = React.useState();
+
     return(<div>
         <Grid container spacing = {2} justifyContent = "flex-start" style = {{flexDirection:'row', borderBlockStyle: 'solid', height: '160px'}}>
             <Grid item xs = {4} sm = {2} style = {{margin:0}}>

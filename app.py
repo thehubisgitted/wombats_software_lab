@@ -59,7 +59,46 @@ def RegistrationRequest():
         
     return jsonify({'confirmation':"USER_CREATION_SUCCESS"})
     
+@app.route('/getProjects', methods = ['POST'])
+def Projects_List_Request():
+    request_data = request.get_json()
+    print(request_data, file=sys.stderr)
     
+    user_id = request_data['userID']
+    #testProjects('111', 'hello', 'world')
+    project_array = mongo.get_all_projects_by_ID(user_id)
+    print("List: ",project_array, file=sys.stderr)
+    
+    
+    return jsonify({'confirmation':'Data Recieved'})
+
+def testProjects(user_id, username, password,):
+    user_1 = User.User(username, user_id, password)
+    mongo.create_user(user_1)
+    Project_1 = Project.Project('Project_One','000','test one', [user_1],{'hw1':50,'hw2':100})
+    Project_2 = Project.Project('Project_TWO','001','test two', [user_1],{'hw1':100,'hw2':200})
+    Project_3 = Project.Project('Project_THREE','002','test three', [user_1],{'hw1':75,'hw2':300})
+    
+    if mongo.create_project(Project_1) is True:
+        print('project 1 created', file=sys.stderr)
+    if mongo.create_project(Project_2) is True:
+        print('project 2 created', file=sys.stderr)
+    if mongo.create_project(Project_3) is True:
+        print('project 3 created', file=sys.stderr)
+        
+    mongo.add_user_to_project('000', user_1)
+    mongo.add_user_to_project('001', user_1)
+    mongo.add_user_to_project('002',user_1)
+    
+    if mongo.is_user_in_project(user_id, '000') is True:
+        print('user is in project 1', file=sys.stderr)
+        
+    if mongo.is_user_in_project(user_id, '001') is True:
+        print('user is in project 2', file=sys.stderr)
+    
+    if mongo.is_user_in_project(user_id, '002') is True:
+        print('user is in project 3', file=sys.stderr)
+        
 
 @app.route('/user/<username>')
 def queryUser(username):

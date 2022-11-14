@@ -325,7 +325,7 @@ class DataHandler:
         :return: List of projects that "ID" is a member of
         """
         db = self.client.Projects
-        collection = db['Project']
+        collection = db['Project'].find()
         project_array = []
         for project in collection:
             if self.is_user_in_project(user_id, project['ID']):
