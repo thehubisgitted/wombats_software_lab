@@ -67,10 +67,15 @@ def Projects_List_Request():
     user_id = request_data['userID']
     #testProjects('111', 'hello', 'world')
     project_array = mongo.get_all_projects_by_ID(user_id)
-    print("List: ",project_array, file=sys.stderr)
+    
+    data = []
+    for project in project_array:
+        data.append({'name': project.get_name(), 'hardware': project.get_hardware()})
+    print(data, file=sys.stderr)
+        
     
     
-    return jsonify({'confirmation':'Data Recieved'})
+    return jsonify(data)
 
 def testProjects(user_id, username, password,):
     user_1 = User.User(username, user_id, password)
