@@ -9,11 +9,15 @@ function Projects(){
     const {state} = useLocation();
     const {ID, USERNAME} = state;
     
-
-    const projects:any = [];
+    interface project_type{
+        name: string;
+        hardware: number[];
+    }
+    const [projects, setProjects] = React.useState<project_type[] | null>([]);
 
     React.useEffect(() => {
         const projectlist = getProjects(ID);
+        console.log(`hello heres data from ${projectlist}`);
         
       }, [ID]);
 
@@ -21,7 +25,7 @@ function Projects(){
       function getProjects(ID: any){
         if(ID === undefined){
             console.log("NO ID? UNDEFINED");
-            return;
+            return [];
         }
 
         fetch('/getProjects', {
@@ -34,6 +38,12 @@ function Projects(){
           .then((response) => response.json())
           .then((data)=>{
             console.log(data);
+            const list: project_type[] = [];
+            data.forEach((project: project_type) =>{
+                list.push({'name':project.name,'hardware':project.hardware})
+            })
+            setProjects(list);
+            
 
           })
           .catch((error)=>{
@@ -49,7 +59,7 @@ function Projects(){
             <div style = {{display:'inline-flex', float:'left', marginLeft:20}}>
                 {USERNAME === 'loginUser' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
             </div>
-            { projects.map((project: { name: any; }) => <Projectview key={project.name} project={project} />) }
+            { projects?.map((project: { name: any; }) => <Projectview key={project.name} project={project} />) }
             <div style = {{display:'inline-flex', float:'right', margin:20}}>
                 <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
             </div>
@@ -68,8 +78,8 @@ function Projectview(props: any){
                 <h2> {props.project.name}</h2>
             </Grid>
             <Grid item xs = {4} sm = {2} justifyContent = "center" style = {{flexDirection: 'column', padding:'30px'}}>
-                <p>HWSET1: {props.project.set_one}</p>
-                <p>HWSET2: {props.project.set_two}</p>
+                <p>HWSET1: {props.project.hardware[0]}</p>
+                <p>HWSET2: {props.project.hardware[1]}</p>
             </Grid>
             <Grid item xs = {4} sm = {2}  style = {{padding: 20}}>
                 <TextField variant = 'outlined' id = "hardwareset_1"  label = "Enter QTY" type = "number"  margin = "dense" >
