@@ -2,7 +2,6 @@ import React from 'react';
 import './../App.css'
 import {useNavigate, useLocation} from 'react-router-dom';
 import { Button, Grid, TextField} from '@material-ui/core';
-import { string } from 'prop-types';
 import { BorderAllOutlined, FirstPage } from '@material-ui/icons';
 
 function Projects(){
