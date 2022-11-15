@@ -34,19 +34,14 @@ class DataHandler:
             member_list = project.get_members()
             member_list_to_add_to_document = []
             for member in member_list:
-                member_list_to_add_to_document.append([member.username, member.ID, rsa.encrypt(member.password.encode(), DataHandler.public_key)])
-
-            hardware_dictionary = project.get_hardware()
-            hw_list = hardware_dictionary.keys()
-            hw_list_to_add_to_document = []
-            for hw_name in hw_list:
-                hw_list_to_add_to_document.append([hw_name, hardware_dictionary[hw_name]])
+                member_list_to_add_to_document.append(
+                    [member.username, member.ID, rsa.encrypt(member.password.encode(), DataHandler.public_key)])
 
             project_to_be_inserted = {"name": project.get_name(),
                                       "ID": project.get_ID(),
                                       "Description": project.get_description(),
                                       "members": member_list_to_add_to_document,
-                                      "hardware": hw_list_to_add_to_document}
+                                      "hardware": project.get_hardware()}
 
             collection.insert_one(project_to_be_inserted)
             return True
@@ -237,11 +232,7 @@ class DataHandler:
         db = self.client.Projects
         collection = db['Project']
         project_verified = collection.find_one({'ID': project_id})
-        if self.is_hardware_in_project(project_id, hw):
-            hw_list = project_verified['hardware']
-            for hw_set in hw_list:
-                if hw_set[0] == hw:
-                    return hw_set[1]
+        return project_verified['hardware'][hw]
 
     def add_hardware_to_project(self, project_id, hw, qty):
         """
@@ -253,52 +244,62 @@ class DataHandler:
         db = self.client.Projects
         collection = db['Project']
         project_verified = collection.find_one({'ID': project_id})
-        if self.is_hardware_in_project(project_id, hw):
-            hw_list = project_verified['hardware']
-            for hw_set in hw_list:
-                if hw_set[0] == hw:
-                    hw_list.remove(hw_set)
-            hw_list.append([hw, qty])
+        hw_list = project_verified['hardware']
+        new_hw_list = [0, 0]
+        if hw == 0:
+            new_hw_list[0] = qty
+            new_hw_list[1] = hw_list[1]
         else:
-            hw_list = project_verified['hardware']
-            hw_list.append([hw, qty])
-        new_data = {'$set': {'hardware': hw_list}}
+            new_hw_list[0] = hw_list[0]
+            new_hw_list[1] = qty
+        new_data = {'$set': {'hardware': new_hw_list}}
         collection.update_one({'ID': project_id}, new_data)
 
-    def checkout_hardware(self, project_id, name, qty):
+    def checkout_hardware(self, project_id, choice, qty):
         """
         Checks out an amount of a hardware set. Frontend should use this method for checking out.
         :param project_id: Project ID checking out
-        :param name: Name of a hardware set
+        :param choice: Name of a hardware set
         :param qty: Amount to check out
         :return: True
         """
+        name = ''
+        if choice == 0:
+            name = 'HWSet1'
+        else:
+            name = 'HWSet2'
         hw = self.get_hw(name)
-        amount_in_project = self.get_hardware_in_project(project_id, name)
-        if amount_in_project is None:
+        amount_in_project = self.get_hardware_in_project(project_id, choice)
+        if amount_in_project == 0:
             amount_in_project = hw.check_out(qty)
             self.alter_availability(name, hw.get_availability())
-            self.add_hardware_to_project(project_id, name, amount_in_project)
+            self.add_hardware_to_project(project_id, choice, amount_in_project)
         else:
-            amount_in_project + hw.check_out(qty)
+            amount_in_project = amount_in_project + hw.check_out(qty)
             self.alter_availability(name, hw.get_availability())
-            self.add_hardware_to_project(project_id, name, amount_in_project)
+            self.add_hardware_to_project(project_id, choice, amount_in_project)
         return True
 
-    def check_in_hardware(self, project_id, name, qty):
+    def check_in_hardware(self, project_id, choice, qty):
         """
         Checks in an amount of a hardware set. Frontend should use this method for checking in.
         :param project_id: Project ID checking in
-        :param name: Name of the hardware set
+        :param choice: Name of the hardware set
         :param qty: amount to check in
         :return: True
         """
+
+        name = ''
+        if choice == 0:
+            name = 'HWSet1'
+        else:
+            name = 'HWSet2'
         hw = self.get_hw(name)
-        amount_in_project = self.get_hardware_in_project(project_id, name)
+        amount_in_project = self.get_hardware_in_project(project_id, choice)
         amount_in_project -= qty
         hw.check_in(qty)
         self.alter_availability(name, hw.get_availability())
-        self.add_hardware_to_project(project_id, name, amount_in_project)
+        self.add_hardware_to_project(project_id, choice, amount_in_project)
         return True
 
     def get_all_users(self, project_id):
@@ -333,10 +334,8 @@ class DataHandler:
                 for member in project['members']:
                     member_list.append(User.User(member[0], member[1], rsa.decrypt(member[2],
                                                                                    DataHandler.private_key).decode()))
-                hardware_dictionary = {}
-                for hw_set in project['hardware']:
-                    hardware_dictionary[hw_set[0]] = hw_set[1]
+
                 new_project = Project.Project(project['name'], project['ID'], project['Description'],
-                                              member_list, hardware_dictionary)
+                                              member_list, project['hardware'])
                 project_array.append(new_project)
         return project_array

@@ -1,12 +1,12 @@
 class Project:
 
-    def __init__(self, name, ID, description, members, hardware={}):
+    def __init__(self, name, ID, description, members, hardware=None):
         self.__name = name
         self.__ID = ID
         self.__description = description
         self.__members = members
-        if hardware.__len__() == 0:
-            self.__hardware = {}
+        if hardware is None:
+            self.__hardware = [0, 0]
         else:
             self.__hardware = hardware
 
@@ -41,12 +41,12 @@ class Project:
         self.__members.remove(name)
 
     def add_hardware(self, hw, amount):
-        self.__hardware[hw] = amount
+        self.__hardware[hw] += amount
 
     def remove_hardware(self, hw, amount):
         current_amount = self.__hardware[hw]
         if current_amount <= amount:
-            self.__hardware.__delitem__(hw)
+            self.__hardware[hw] = 0
         else:
             self.__hardware[hw] = current_amount - amount
 
