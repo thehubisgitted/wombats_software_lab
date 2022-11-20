@@ -194,6 +194,17 @@ class DataHandler:
         new_data = {'$set': {'availability': amount}}
         collection.update_one(hw_set, new_data)
 
+    def get_capacity(self, choice):
+        db = self.client.hardwareSets
+        collection = db['HWSet']
+        name = ''
+        if choice == 0:
+            name = 'HWSet1'
+        else:
+            name = 'HWSet2'
+        hw_set = collection.find_one({'name': name})
+        return hw_set['capacity']
+
     def get_hw(self, name):
         """
         Gets a hardware set by name
