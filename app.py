@@ -67,10 +67,11 @@ def Projects_List_Request():
     user_id = request_data['userID']
     #testProjects('111', 'hello', 'world')
     project_array = mongo.get_all_projects_by_ID(user_id)
-    
+    capacity_1 = mongo.get_capacity(0)
+    capacity_2 = mongo.get_capacity(1)
     data = []
     for project in project_array:
-        data.append({'name': project.get_name(), 'hardware': project.get_hardware()})
+        data.append({'name': project.get_name(), 'hardware': project.get_hardware(), 'capacity': [capacity_1, capacity_2]})
     print(data, file=sys.stderr)
         
     

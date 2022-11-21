@@ -12,48 +12,52 @@ function Projects(){
     interface project_type{
         name: string;
         hardware: number[];
+        capacity: number[];
     }
     const [projects, setProjects] = React.useState<project_type[] | null>([]);
 
     React.useEffect(() => {
+
+        function getProjects(ID: any){
+            if(ID === undefined){
+                console.log("NO ID? UNDEFINED");
+                return [];
+            }
+    
+            fetch('/getProjects', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({'userID':ID}),
+              })
+              .then((response) => response.json())
+              .then((data)=>{
+                console.log(data);
+                const list: project_type[] = [];
+                data.forEach((project: project_type) =>{
+                    list.push({'name':project.name,'hardware':project.hardware, 'capacity': project.capacity})
+                })
+                setProjects(list);
+                
+    
+              })
+              .catch((error)=>{
+                if(error.response){
+                    console.log(error);
+                    console.log(error.response.statuts);
+                    console.log(error.response.headers);
+                  }
+              })
+          }
+
         const projectlist = getProjects(ID);
         console.log(`hello heres data from ${projectlist}`);
         
       }, [ID]);
 
 
-      function getProjects(ID: any){
-        if(ID === undefined){
-            console.log("NO ID? UNDEFINED");
-            return [];
-        }
-
-        fetch('/getProjects', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'userID':ID}),
-          })
-          .then((response) => response.json())
-          .then((data)=>{
-            console.log(data);
-            const list: project_type[] = [];
-            data.forEach((project: project_type) =>{
-                list.push({'name':project.name,'hardware':project.hardware})
-            })
-            setProjects(list);
-            
-
-          })
-          .catch((error)=>{
-            if(error.response){
-                console.log(error);
-                console.log(error.response.statuts);
-                console.log(error.response.headers);
-              }
-          })
-      }
+      
     return(
         <div className='App'>
             <div style = {{display:'inline-flex', float:'left', marginLeft:20}}>
@@ -69,8 +73,9 @@ function Projects(){
 
 function Projectview(props: any){
 
-    const [hardware_1, setHardware_1] = React.useState();
-    const [hardware_2, setHardware_2] = React.useState();
+    const [available_hardware_1, setHardware_1] = React.useState(props.project.hardware[0]);
+    const [available_hardware_2, setHardware_2] = React.useState(props.project.hardware[1]);
+  
 
     return(<div>
         <Grid container spacing = {2} justifyContent = "flex-start" style = {{flexDirection:'row', borderBlockStyle: 'solid', height: '160px'}}>
@@ -78,8 +83,8 @@ function Projectview(props: any){
                 <h2> {props.project.name}</h2>
             </Grid>
             <Grid item xs = {4} sm = {2} justifyContent = "center" style = {{flexDirection: 'column', padding:'30px'}}>
-                <p>HWSET1: {props.project.hardware[0]}</p>
-                <p>HWSET2: {props.project.hardware[1]}</p>
+                <h3 style = {{'whiteSpace': 'nowrap'}}>HWSET1: {available_hardware_1}/{props.project.capacity[0]}</h3>
+                <h3 style = {{'whiteSpace': 'nowrap'}}>HWSET2: {available_hardware_2}/{props.project.capacity[1]}</h3>
             </Grid>
             <Grid item xs = {4} sm = {2}  style = {{padding: 20}}>
                 <TextField variant = 'outlined' id = "hardwareset_1"  label = "Enter QTY" type = "number"  margin = "dense" >
