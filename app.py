@@ -71,7 +71,7 @@ def Projects_List_Request():
     capacity_2 = mongo.get_capacity(1)
     data = []
     for project in project_array:
-        data.append({'name': project.get_name(), 'hardware': project.get_hardware(), 'capacity': [capacity_1, capacity_2]})
+        data.append({'name': project.get_name(), 'hardware': project.get_hardware(), 'capacity': [capacity_1, capacity_2], 'ID': project.get_ID()})
     print(data, file=sys.stderr)
         
     
@@ -105,6 +105,26 @@ def testProjects(user_id, username, password,):
     if mongo.is_user_in_project(user_id, '002') is True:
         print('user is in project 3', file=sys.stderr)
         
+
+
+@app.route ('/hardwarecheck', methods = ['POST'])
+def hardwarecheck():
+    request_data = request.get_json()
+    print(request_data, file=sys.stderr)
+    
+    command = request_data['command']
+    quantity = float(request_data['quantity'])
+    project_ID = request_data['project_ID']
+    number = request_data['number']
+    
+    if(command == 'checkin'):
+        mongo.check_in_hardware(project_ID, number, quantity)
+        return jsonify({'confirmation': 'hardware checked-in successfully'})
+    
+    mongo.checkout_hardware(project_ID, number, quantity)
+    return jsonify({'confirmation': 'hardware checkedout successfully'})
+    
+
 
 @app.route('/user/<username>')
 def queryUser(username):
