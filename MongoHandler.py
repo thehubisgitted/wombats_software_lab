@@ -96,6 +96,18 @@ class DataHandler:
             collection.update_one({'ID': project}, new_data)
             return True
 
+    def remove_user_from_project(self, project_id, user_id):
+        db = self.client.Projects
+        collection = db['Project']
+        project_verified = collection.find_one({'ID': project_id})
+        user_list = project_verified['members']
+        for member in user_list:
+            if member[1] == user_id:
+                user_list.remove(member)
+
+        new_data = {'$set': {'members': user_list}}
+        collection.update_one({'ID': project_id}, new_data)
+
     def verify_user_exists(self, id):
         """
         Verifies a user with "ID" exists in the database
@@ -350,3 +362,12 @@ class DataHandler:
                                               member_list, project['hardware'])
                 project_array.append(new_project)
         return project_array
+
+    def get_name_by_id(self, id):
+        db = self.client.users
+        collection = db['users']
+        user_verified = collection.find_one({'ID': id})
+        if user_verified is None:
+            return False
+        else:
+            return user_verified['username']
