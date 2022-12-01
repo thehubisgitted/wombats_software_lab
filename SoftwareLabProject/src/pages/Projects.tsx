@@ -235,9 +235,10 @@ function Projectview(props: any){
                         setHardware_1(displayquantity);
                     }
                     else{
+                        const displayquantity = Number(checkedout_hardware_2) - Number(quantity);
+                        console.log(displayquantity);
                         const set = props.total_2[1];
                         set(Number(props.total_2[0]) - Number(quantity));
-                        const displayquantity = Number(checkedout_hardware_2) - Number(quantity);
                         setHardware_2(displayquantity);
                     }
                 }
