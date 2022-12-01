@@ -11,18 +11,53 @@ function Login() {
     const [pass, setpass] = React.useState("");
     const [error, seterror] = React.useState(false);
     const [status, setStatus] = React.useState("");
+    const [username, setUsername] = React.useState("dummy");
   
     function handleChange_user(event:any){
       setuserID(event.target.value);
+      
     }
     function handleChange_pass(event:any){
       setpass(event.target.value);
     }
+
+    function getUsername(){
+
+      const ID_JSON = {'userID': userID};
+      console.log(ID_JSON);
+
+      fetch('/getUsername', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(ID_JSON),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data + " here is what the data is");
+        const answer = data['username'];
+        console.log(answer);
+
+        setUsername(answer);
+
+      })
+      .catch((error) => {
+        if(error.response){
+          console.log(error);
+          console.log(error.response.statuts);
+          console.log(error.response.headers);
+        }
+
+      })
+
+    }
   
     function handleLogin(){
-  
+        getUsername();
         const data = {'userID':userID, 'password':pass};
         console.log(data);
+        
   
       fetch('/login', {
         method: 'POST',
@@ -44,7 +79,10 @@ function Login() {
         }
         else{
           seterror(true);
-          setStatus("Login Successful! loading...")
+          
+
+          setStatus("Login Successful! loading...");
+         
           Projects_REDIRECT();
         }
       }).catch((error) => {
@@ -66,7 +104,7 @@ function Login() {
       added temporary redirect so michael can work on projects page
     */
     function Projects_REDIRECT(){
-      navigate('/projects', {state:{ID: userID, USERNAME: 'loginUser'}});
+      navigate('/projects', {state:{ID: userID, USERNAME: username}});
     }
   
     return (

@@ -77,9 +77,10 @@ function Projects(){
     return( //dynamic rendering based off of list named 'projects'
         <div className='App'>
             <div style = {{display:'inline-flex', float:'left', marginLeft:20}}>
-                {USERNAME === 'loginUser' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
+                {USERNAME === 'dummy' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
             </div>
-            { projects?.map((project: { name: any; }) => <Projectview key={project.name} project={project} total_1 = {[totalTaken_1, setTotalTaken_1]} total_2 = {[totalTaken_2, setTotalTaken_2]}/>) }
+            { projects?.map((project: { name: any; }) => <Projectview key={project.name} project={project} total_1 = {[totalTaken_1, setTotalTaken_1]} total_2 = {[totalTaken_2, setTotalTaken_2]}
+            user_id = {ID}/>) }
             <div style = {{display:'inline-flex', float:'right', margin:20}}>
                 <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
             </div>
@@ -108,6 +109,7 @@ function Projectview(props: any){
     const handleHardware_2 = (event:any) => {
         setQuantity_2(event.target.value);
     }
+    
 
 
     const checkin_button = (number: number) => {
@@ -145,7 +147,8 @@ function Projectview(props: any){
             fetch_hardware_check("checkin", quantity, number-1);
         }
         else{
-            console.log('api not fetched')
+            console.log('api not fetched');
+            alert(`CAN'T CHECK IN ${quantity}!`);
         }
         
 
@@ -161,7 +164,7 @@ function Projectview(props: any){
         if(quantity < 0){
             return;
         }
-        
+
         if(number === 1){
             quantity = quantity_1;
             total_used = props.total_1[0];
@@ -183,6 +186,7 @@ function Projectview(props: any){
         }
         else{
             console.log(`api not fetched`);
+            alert(`CAN'T CHECK OUT ${quantity} !`);
         }
         
 
@@ -241,6 +245,34 @@ function Projectview(props: any){
           })
     }
 
+    const leaveProject = () =>{
+        const data = {'userID': props.user_id, 'projectID': props.project.ID };
+        fetch('/leaveProject', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+          .then((response) => response.json())
+          .then((data) =>{
+            if(data['confirmation'] === 'remove attempted'){
+                console.log("message recieved");
+            }
+
+          }).catch((error) => {
+                if(error.response){
+                    console.log(error);
+                    console.log(error.response.statuts);
+                    console.log(error.response.headers);
+                }
+          })
+    }
+
+    const handleOnClick_Leave = ()=>{
+        leaveProject();
+    }
+
     //UI for one project
     return(<div>
         <Grid container spacing = {2} justifyContent = "flex-start" style = {{flexDirection:'row', borderBlockStyle: 'solid', height: '160px'}}>
@@ -269,7 +301,7 @@ function Projectview(props: any){
                 <Button onClick = {()=> checkout_button(2)} variant = "outlined" style = {{margin:10, width: '100%'}}> Check Out</Button>
             </Grid>
             <Grid item xs = {4} sm = {2} justifyContent = "center" alignContent = "center" style = {{flexDirection: 'column', padding:50}}>
-                <Button variant = "contained" color = "primary" style = {{height: '40px', width:'100%'}}> LEAVE </Button>
+                <Button onClick={()=>handleOnClick_Leave()}variant = "contained" color = "primary" style = {{height: '40px', width:'100%'}}> LEAVE </Button>
             </Grid>
         </Grid>
     </div>);
