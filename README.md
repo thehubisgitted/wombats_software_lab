@@ -6,7 +6,9 @@ FAll22 ECE SoftwareLab
     Leaving a project is functional, user 111 and user 222 have multiple projects as of 12/1
      and can be accessed with password 'world'.
 
-    Created using NPX Create-React-App with Typescript framework, Flask Routing, reacter-dom-v6 for multipage routing and pymongo as our database. It's hosted using Heroku (if link still works) at 
+    Created using NPX Create-React-App with Typescript framework, Flask Routing,
+    reacter-dom-v6 for multipage routing and pymongo as our database.
+    It's hosted using Heroku (if link still works) at 
     https://software-lab-project.herokuapp.com/
 
     Frontend and routing written by Kenneth P. 
