@@ -350,3 +350,12 @@ class DataHandler:
                                               member_list, project['hardware'])
                 project_array.append(new_project)
         return project_array
+
+    def get_name_by_id(self, id):
+        db = self.client.users
+        collection = db['users']
+        user_verified = collection.find_one({'ID': id})
+        if user_verified is None:
+            return False
+        else:
+            return user_verified['username']
