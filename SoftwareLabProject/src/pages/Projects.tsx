@@ -5,6 +5,10 @@ import { Button, Grid, TextField} from '@material-ui/core';
 import { BorderAllOutlined, CompassCalibrationOutlined, FirstPage } from '@material-ui/icons';
 import { stringify } from 'querystring';
 
+/**
+ * 
+ * Projects display page with all project information and functionality
+ */
 function Projects(){
     const navigate = useNavigate();
     const {state} = useLocation();
@@ -16,7 +20,7 @@ function Projects(){
         capacity: number[];
         ID: number|string;
     }
-    const [projects, setProjects] = React.useState<project_type[] | null>([]);
+    const [projects, setProjects] = React.useState<project_type[] | null>([]); //list of projects of type project_type
     const [totalTaken_1, setTotalTaken_1] = React.useState<number>(0); //total number thats taken by all projects
     const [totalTaken_2, setTotalTaken_2] = React.useState<number>(0);
 
@@ -39,11 +43,12 @@ function Projects(){
               .then((data)=>{
                 console.log(data);
                 const list: project_type[] = [];
-                //counter for hardware
+                //counter for  total hardware used in each set
                 let count_hardware_1: number = 0;
                 let count_hardware_2: number = 0;
                 console.log(` counts ${count_hardware_1} and ${count_hardware_2}`)
-                data.forEach((project: project_type) =>{
+
+                data.forEach((project: project_type) =>{ //maps over every project and then pushes into one list
                     count_hardware_1 += project.hardware[0];
                     console.log(` count 1: ${count_hardware_1}`)
                     count_hardware_2 += project.hardware[1];
@@ -88,6 +93,13 @@ function Projects(){
     );
 }
 
+/**
+ * 
+ * @param props 
+ * @returns
+ * 
+ * Individual Project component with any functionality thats project specific
+ */
 function Projectview(props: any){
     // availability for hardware 1 and 2
     const [checkedout_hardware_1, setHardware_1] = React.useState(Number(props.project.hardware[0])); 
@@ -111,7 +123,14 @@ function Projectview(props: any){
     }
     
 
-
+    /**
+     * 
+     * @param number 
+     * @returns 
+     * 
+     * updates the hardware value after checking in, and all logic
+     * will send an alert if check in fails
+     */
     const checkin_button = (number: number) => {
         let quantity = 0;
         if(quantity < 0){
@@ -155,6 +174,7 @@ function Projectview(props: any){
         
     }
 
+    /** handles all logic for checkout and will send an alert if checkout fails */
     const checkout_button = (number: number) => {
         let quantity = 0;
         let total_used = 0;
@@ -191,7 +211,7 @@ function Projectview(props: any){
         
 
     }  
-
+    /** api call function thats called whenever hardware value needs to be adjusted */
     function fetch_hardware_check(command: string, quantity: number, number: number){
         const data = {'command': command, 'quantity': quantity, 'project_ID': project_ID, 'number': number}
         fetch('/hardwarecheck', {
@@ -244,7 +264,10 @@ function Projectview(props: any){
               }
           })
     }
-
+    
+    /**
+     * active on leave button click, a user can leave that specific project
+     */
     const leaveProject = () =>{
         const data = {'userID': props.user_id, 'projectID': props.project.ID };
         fetch('/leaveProject', {
@@ -269,6 +292,7 @@ function Projectview(props: any){
           })
     }
 
+    //standalone onclick function
     const handleOnClick_Leave = ()=>{
         leaveProject();
     }

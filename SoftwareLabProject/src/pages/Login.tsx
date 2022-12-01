@@ -5,7 +5,10 @@ import 'normalize.css';
 import {AccountCircle, LockRounded} from '@material-ui/icons'
 import {useNavigate} from 'react-router-dom';
 
-
+/**
+ * LOGIN UI component with all front end functionality
+ * @returns 
+ */
 function Login() {
     const [userID, setuserID] = React.useState("");
     const [pass, setpass] = React.useState("");
@@ -21,6 +24,11 @@ function Login() {
       setpass(event.target.value);
     }
 
+
+    /**
+     * Gets the username from the databased based on ID
+     * used for displaying the username field
+     */
     function getUsername(){
 
       const ID_JSON = {'userID': userID};
@@ -52,7 +60,11 @@ function Login() {
       })
 
     }
-  
+    
+    /**
+     * called when login is clicked
+     * used to verify login
+     */
     function handleLogin(){
         getUsername();
         const data = {'userID':userID, 'password':pass};
@@ -95,7 +107,8 @@ function Login() {
     }
   
     const navigate = useNavigate();
-  
+    
+    // standalone function that redirects user to registration page
     function Registration_REDIRECT(){
       navigate('/register');
     }
