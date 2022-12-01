@@ -101,9 +101,10 @@ function Projects(){
  * Individual Project component with any functionality thats project specific
  */
 function Projectview(props: any){
-    // availability for hardware 1 and 2
+    // checked out hardware for hardware 1 and 2
     const [checkedout_hardware_1, setHardware_1] = React.useState(Number(props.project.hardware[0])); 
     const [checkedout_hardware_2, setHardware_2] = React.useState(Number(props.project.hardware[1]));
+
     
     //keep track of values in textfields
     const [quantity_1, setQuantity_1] = React.useState(0);
@@ -235,8 +236,8 @@ function Projectview(props: any){
                     }
                     else{
                         const set = props.total_2[1];
-                        set(Number(props.total_2[0]) + Number(quantity));
-                        const displayquantity = Number(quantity)+Number(checkedout_hardware_2);
+                        set(Number(props.total_2[0]) - Number(quantity));
+                        const displayquantity = Number(checkedout_hardware_2) - Number(quantity);
                         setHardware_2(displayquantity);
                     }
                 }
