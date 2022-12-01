@@ -227,7 +227,29 @@ def hardwarecheck():
     
 
 
+@app.route('/getUsername', methods = ['POST'])
+def getUsername():
+    request_data = request.get_json()
+    username = request_data['userID']
+    print( "get username ",request_data, file=sys.stderr)
+    
+    name = mongo.get_name_by_id(username)
+    
+    print(name, file=sys.stderr)
+    return jsonify({'username': name})
 
+    
+@app.route('/leaveProject', methods = ['POST'])
+def leaveProject():
+    request_data = request.get_json()
+    print(request_data, file=sys.stderr)
+    
+    userID = request_data['userID']
+    projectID = request_data['projectID']
+    mongo.remove_user_from_project(projectID, userID)
+    return jsonify({'confirmation': 'remove attempted'})
+    
+    
 @app.route('/user/<username>')
 
 def queryUser(username):
