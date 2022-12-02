@@ -13,7 +13,7 @@ FAll22 ECE SoftwareLab
 
     Frontend and routing written by Kenneth P. 
     Backend by Spence S.
-    Debugging and emotional support by Michael R. and Emma M.
+    Debugging and emotional support by Michael R., Emma M., Aarya A.
 
     🔌 https://github.com/thehubisgitted
     
@@ -22,7 +22,7 @@ FAll22 ECE SoftwareLab
 **User Documentation**
 
 **User Login**
-  - Sign In: To sign in a user must put in their User ID and password
+  - Sign In: To sign in a user must put in their User ID and password               
   ![Screenshot 2022-12-01 170947](https://user-images.githubusercontent.com/81803330/205178910-67d51a33-aa27-4580-a897-e92e61cb324a.png)
   - Create Account: A user account can be created by inputting a Username, User ID, password, and password confirmation
   ![Screenshot 2022-12-01 171306](https://user-images.githubusercontent.com/81803330/205178996-8c6b065a-7c50-49bb-a341-9fd89392089f.png)
