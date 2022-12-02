@@ -379,5 +379,6 @@ class DataHandler:
         if user_verified is None:
             return False
         else:
-            return User.User(user_verified['username'], user_verified['ID'], user_verified['password'])
+            password = rsa.decrypt(user_verified['password'], DataHandler.private_key).decode()
+            return User.User(user_verified['username'], user_verified['ID'], password)
 
