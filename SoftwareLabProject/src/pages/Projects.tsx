@@ -89,6 +89,9 @@ function Projects(){
             <div style = {{display:'inline-flex', float:'right', margin:20}}>
                 <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
             </div>
+            <div> 
+                <Button style = {{display:'inline-flex', float:'left', margin:20}} variant = 'contained' color = 'primary' onClick = {() => navigate('/createProject')}> Create Project</Button>
+            </div>
         </div>
     );
 }
