@@ -371,3 +371,13 @@ class DataHandler:
             return False
         else:
             return user_verified['username']
+
+    def get_user_by_id(self, id):
+        db = self.client.users
+        collection = db['users']
+        user_verified = collection.find_one({'ID': id})
+        if user_verified is None:
+            return False
+        else:
+            return User.User(user_verified['username'], user_verified['id'], user_verified['password'])
+
