@@ -167,7 +167,7 @@ function CreateProject() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  Other Users
+                  Authorized Users
                 </h2>
                 <TextField
                   onChange={handleChange_userslist}

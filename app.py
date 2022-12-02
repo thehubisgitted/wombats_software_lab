@@ -70,13 +70,13 @@ def createProject():
         print('project is created', file=sys.stderr)
         
     for userID in list_of_user_ids:
-            if mongo.verify_user_exists(user_id) is True:
+            if mongo.verify_user_exists(userID) is True:
                 user =  mongo.get_user_by_id(userID)
                 mongo.add_user_to_project(project_id, user)
 
         
        
-            if mongo.is_user_in_project(user_id, '000') is True:
+            if mongo.is_user_in_project(userID, project_id) is True:
              print("User: ",userID," is in project", file=sys.stderr)
              
     return jsonify({'confirmation': "users were added"})
