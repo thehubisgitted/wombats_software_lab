@@ -13,6 +13,35 @@ FAll22 ECE SoftwareLab
 
     Frontend and routing written by Kenneth P. 
     Backend by Spence S.
-    Debugging and emotional support by Michael R. and Emma M.
+    Debugging and emotional support by Michael R., Emma M., Aarya A.
 
     🔌 https://github.com/thehubisgitted
+    
+    
+    
+**User Documentation**
+
+**User Login**
+  - Sign In: To sign in a user must put in their User ID and password               
+  ![Screenshot 2022-12-01 170947](https://user-images.githubusercontent.com/81803330/205178910-67d51a33-aa27-4580-a897-e92e61cb324a.png)
+  - Create Account: A user account can be created by inputting a Username, User ID, password, and password confirmation
+  ![Screenshot 2022-12-01 171306](https://user-images.githubusercontent.com/81803330/205178996-8c6b065a-7c50-49bb-a341-9fd89392089f.png)
+  - Link: https://software-lab-project.herokuapp.com/
+
+**Project Registration/Views**
+  - All new registered users are initialized into the Default Project
+  ![Screenshot 2022-12-01 171416](https://user-images.githubusercontent.com/81803330/205179143-afe35c0e-eb95-488e-8265-f6b9f16d1609.png)
+  - As of now, users can only register for projects manually through calling the function addUserToProjects() 
+  - The views page will show all Projects that a user is registered for, allowing for check-in and check-outs
+  ![Screenshot 2022-12-01 171456](https://user-images.githubusercontent.com/81803330/205179218-8f374d6a-a7e2-4eaa-ab89-2755453cd860.png)
+  - Users can leave projects br pressing the leave button next to the respective project
+  - Link: https://software-lab-project.herokuapp.com/projects
+
+**Hardware Set Page**
+ - The projects page shows the information for the current project, name, and availability
+ - The main interface shows the availability of sets
+    - A user can check in or check out hardware to/from either set by entering a value in the text field, and then clicking the check in or check out buttons for the respective hardware set to adjust the storage capacity for the project and set. 
+  - User is allowed to either log out, or leave the project by pressing the respective buttons
+  ![Screenshot 2022-12-01 171622](https://user-images.githubusercontent.com/81803330/205179397-80c36bce-1568-460b-96a1-a6bae2494ae0.png)
+
+
