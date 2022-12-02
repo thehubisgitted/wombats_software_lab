@@ -15,6 +15,7 @@ function CreateProject() {
 
   function handleCreateProject() {
     console.log("you clicked create project!");
+    fetch_create_project();
   }
 
   function handleChange_id(event: any) {
