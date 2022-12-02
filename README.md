@@ -33,7 +33,8 @@ FAll22 ECE SoftwareLab
   ![Screenshot 2022-12-01 171416](https://user-images.githubusercontent.com/81803330/205179143-afe35c0e-eb95-488e-8265-f6b9f16d1609.png)
   - As of now, users can only register for projects manually through calling the function addUserToProjects() 
   - The views page will show all Projects that a user is registered for, allowing for check-in and check-outs
-  ![Screenshot 2022-12-01 171456](https://user-images.githubusercontent.com/81803330/205179218-8f374d6a-a7e2-4eaa-ab89-2755453cd860.png)
+  ![Screenshot 2022-12-01 190302](https://user-images.githubusercontent.com/81803330/205191602-e44ebd31-a123-422e-b926-8dfb31934263.png)
+
   - Users can leave projects br pressing the leave button next to the respective project
   - Link: https://software-lab-project.herokuapp.com/projects
 
