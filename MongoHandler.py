@@ -379,5 +379,5 @@ class DataHandler:
         if user_verified is None:
             return False
         else:
-            return User.User(user_verified['username'], user_verified['id'], user_verified['password'])
+            return User.User(user_verified['username'], user_verified['ID'], user_verified['password'])
 
