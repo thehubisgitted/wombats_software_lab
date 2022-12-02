@@ -105,6 +105,8 @@ function Projectview(props: any){
     const [checkedout_hardware_1, setHardware_1] = React.useState(Number(props.project.hardware[0])); 
     const [checkedout_hardware_2, setHardware_2] = React.useState(Number(props.project.hardware[1]));
 
+    const [available_1, setAvailable_1] = React.useState(Number(props.project.capacity[0]) - checkedout_hardware_1);
+    const [available_2, setAvailable_2] = React.useState(Number(props.project.capacity[1]) - checkedout_hardware_2);
     
     //keep track of values in textfields
     const [quantity_1, setQuantity_1] = React.useState(0);
