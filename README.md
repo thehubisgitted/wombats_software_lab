@@ -17,6 +17,8 @@ FAll22 ECE SoftwareLab
 
     🔌 https://github.com/thehubisgitted
     
+    Previous GitHub containing other commits: 
+    https://github.com/emmapmorris/EE461LProject
     
     
 **User Documentation**
