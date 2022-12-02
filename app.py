@@ -67,14 +67,18 @@ def createProject():
     
     new_project = Project.Project(project_title,project_id,project_description, [])
     if mongo.create_project(new_project) is True:
-
-
         print('project is created', file=sys.stderr)
+        
     for userID in list_of_user_ids:
-        user =  mongo.get_user_by_id(userID)
-        mongo.add_user_to_project(project_id, user)
-        if mongo.is_user_in_project(user_id, '000') is True:
-            print("User: ",userID," is in project", file=sys.stderr)
+            if mongo.verify_user_exists(user_id) is True:
+                user =  mongo.get_user_by_id(userID)
+                mongo.add_user_to_project(project_id, user)
+
+        
+       
+            if mongo.is_user_in_project(user_id, '000') is True:
+             print("User: ",userID," is in project", file=sys.stderr)
+             
     return jsonify({'confirmation': "users were added"})
          
         
