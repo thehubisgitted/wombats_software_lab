@@ -9,7 +9,11 @@ FAll22 ECE SoftwareLab
     Created using NPX Create-React-App with Typescript framework, Flask Routing,
     reacter-dom-v6 for multipage routing and pymongo as our database.
     It's hosted using Heroku (if link still works) at 
-    https://software-lab-project.herokuapp.com/
+    https://software-lab-project.herokuapp.com/ (BROKEN)
+    
+    UPDATE 12/20:
+    Migrated app to Render
+    https://software-lab-project.onrender.com/
 
     Frontend and routing written by Kenneth P. 
     Backend by Spence S.
