@@ -1,6 +1,6 @@
 import React from 'react';
 import './../App.css'
-import {useNavigate, useLocation} from 'react-router-dom';
+import {useNavigate, useLocation, Navigate} from 'react-router-dom';
 import { Button, Grid, TextField} from '@material-ui/core';
 import { BorderAllOutlined, CompassCalibrationOutlined, FirstPage } from '@material-ui/icons';
 import { stringify } from 'querystring';
@@ -75,7 +75,7 @@ function Projects(){
         const projectlist = getProjects(ID);
         console.log(`hello heres data from ${projectlist}`);
         
-      }, [ID, totalTaken_1, totalTaken_2]);
+      }, [ID, totalTaken_1, totalTaken_2, USERNAME]);
 
 
       
@@ -85,12 +85,12 @@ function Projects(){
                 {USERNAME === 'dummy' ? <h1>Welcome {ID} !</h1> : <h1>Welcome {USERNAME} !</h1>}
             </div>
             { projects?.map((project: { name: any; }) => <Projectview key={project.name} project={project} total_1 = {[totalTaken_1, setTotalTaken_1]} total_2 = {[totalTaken_2, setTotalTaken_2]}
-            user_id = {ID}/>) }
+            user_id = {ID} username = {USERNAME} NAV = {navigate}/>) }
             <div style = {{display:'inline-flex', float:'right', margin:20}}>
                 <Button variant = 'contained' color = 'primary' onClick = {()=> navigate('/')}> Sign Out</Button>
             </div>
             <div> 
-                <Button style = {{display:'inline-flex', float:'left', margin:20}} variant = 'contained' color = 'primary' onClick = {() => navigate('/createProject')}> Create Project</Button>
+                <Button style = {{display:'inline-flex', float:'left', margin:20}} variant = 'contained' color = 'primary' onClick = {() => navigate('/createProject', {state:{ID: ID, USERNAME: USERNAME}})}> Create Project</Button>
             </div>
         </div>
     );
@@ -302,6 +302,7 @@ function Projectview(props: any){
     //standalone onclick function
     const handleOnClick_Leave = ()=>{
         leaveProject();
+        props.NAV("/projects", {state:{ID: props.user_id, USERNAME: props.USERNAME}});
     }
 
     //UI for one project

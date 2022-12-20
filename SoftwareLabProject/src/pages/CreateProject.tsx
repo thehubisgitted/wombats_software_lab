@@ -2,10 +2,13 @@ import React from "react";
 import "./../App.css";
 import { Grid, TextField, Button, InputAdornment } from "@material-ui/core";
 import { AccountCircle, LockRounded } from "@material-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 function CreateProject() {
   const navigate = useNavigate();
+  const {state} = useLocation();
+  const {ID, USERNAME} = state;
 
   const [projectID, setProjectID] = React.useState<String>("projectid");
   const [projectTitle, setProjectTitle] =
@@ -53,6 +56,8 @@ function CreateProject() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        navigate("/projects", {state:{ID: ID, USERNAME: USERNAME}});
+
       })
       .catch((error) => {
         if (error.response) {
@@ -184,7 +189,7 @@ function CreateProject() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => navigate("/projects")}
+                  onClick={() => navigate("/projects", {state:{ID: ID, USERNAME: USERNAME}})}
                 >
                   {" "}
                   Cancel
