@@ -5,6 +5,8 @@ FAll22 ECE SoftwareLab
     Negative inputs for checking in or checking out hardware is treated as a positive number. 
     Leaving a project is functional, user 111 and user 222 have multiple projects as of 12/1
      and can be accessed with password 'world'.
+     
+     12/20 User '555' created with password 'hello'
 
     Created using NPX Create-React-App with Typescript framework, Flask Routing,
     reacter-dom-v6 for multipage routing and pymongo as our database.
@@ -50,5 +52,12 @@ FAll22 ECE SoftwareLab
     - A user can check in or check out hardware to/from either set by entering a value in the text field, and then clicking the check in or check out buttons for the respective hardware set to adjust the storage capacity for the project and set. 
   - User is allowed to either log out, or leave the project by pressing the respective buttons
   ![Screenshot 2022-12-01 171622](https://user-images.githubusercontent.com/81803330/205179397-80c36bce-1568-460b-96a1-a6bae2494ae0.png)
+  **Project Creation Page**
+  - Users can create a Project on this page
+  - Must add themselves to a project using userID
+  - Can have multiple users just have the IDs comma separated EX: 555,111,000
+  ![image](https://user-images.githubusercontent.com/61165807/208604661-3d4b9e4e-1143-4121-892b-ec36b86a46a6.png)
+
+  
 
 
