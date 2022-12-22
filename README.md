@@ -15,7 +15,7 @@ FAll22 ECE SoftwareLab
     
     UPDATE 12/20:
     Migrated app to Render
-    https://software-lab-project.onrender.com/
+    - Link: https://software-lab-project.onrender.com/
 
     Frontend and routing written by Kenneth P. 
     Backend by Spence S.
