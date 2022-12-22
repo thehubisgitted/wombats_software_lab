@@ -15,7 +15,7 @@ FAll22 ECE SoftwareLab
     
     UPDATE 12/20:
     Migrated app to Render
-    - Link: https://software-lab-project.onrender.com/
+    Link: https://software-lab-project.onrender.com/
 
     Frontend and routing written by Kenneth P. 
     Backend by Spence S.
@@ -34,7 +34,7 @@ FAll22 ECE SoftwareLab
   ![Screenshot 2022-12-01 170947](https://user-images.githubusercontent.com/81803330/205178910-67d51a33-aa27-4580-a897-e92e61cb324a.png)
   - Create Account: A user account can be created by inputting a Username, User ID, password, and password confirmation
   ![Screenshot 2022-12-01 171306](https://user-images.githubusercontent.com/81803330/205178996-8c6b065a-7c50-49bb-a341-9fd89392089f.png)
-  - Link: https://software-lab-project.herokuapp.com/
+  - Link: https://software-lab-project.onrender.com/
 
 **Project Registration/Views**
   - All new registered users are initialized into the Default Project
@@ -44,7 +44,7 @@ FAll22 ECE SoftwareLab
   ![Screenshot 2022-12-01 190302](https://user-images.githubusercontent.com/81803330/205191602-e44ebd31-a123-422e-b926-8dfb31934263.png)
 
   - Users can leave projects br pressing the leave button next to the respective project
-  - Link: https://software-lab-project.herokuapp.com/projects
+
 
 **Hardware Set Page**
  - The projects page shows the information for the current project, name, and availability
